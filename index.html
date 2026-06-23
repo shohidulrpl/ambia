@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MST. AMBIA KHATUN | Fresh Prints Gallery</title>
+    <meta name="description" content="Fresh Prints Gallery by MST. AMBIA KHATUN - A Pinterest-inspired collection of beautiful artwork, photography, and design.">
+    <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fontsource-poppins@5.0.0/index.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #d4a574;
+            --secondary: #f4e4d4;
+            --accent: #c97b63;
+            --dark: #2c2c2c;
+            --light: #faf7f2;
+            --gold: #c9a96e;
+            --blush: #e8b4b8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(250, 247, 242, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+        }
+
+        nav.scrolled {
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .nav-logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--dark);
+            transition: all 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #faf7f2 0%, #f4e4d4 50%, #e8b4b8 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(232, 180, 184, 0.15) 0%, transparent 70%);
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-logo {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(201, 123, 99, 0.3);
+            animation: fadeInUp 1s ease;
+            border: 5px solid white;
+        }
+
+        .hero-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            animation: fadeInUp 1s ease 0.2s both;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+            display: block;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.4s both;
+            line-height: 1.8;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 10px 30px rgba(201, 123, 99, 0.3);
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(201, 123, 99, 0.4);
+            background: var(--dark);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .about-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid var(--primary);
+            border-radius: 20px;
+            z-index: -1;
+        }
+
+        .about-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .about-content h2 span {
+            color: var(--accent);
+        }
+
+        .about-content p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .about-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 6rem 2rem;
+            background: var(--light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .section-header .line {
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        /* Pinterest Masonry Grid */
+        .masonry-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            columns: 4;
+            column-gap: 1.5rem;
+        }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .masonry-item:hover {
+            transform: scale(1.02);
+        }
+
+        .masonry-item img {
+            width: 100%;
+            display: block;
+            border-radius: 15px;
+            transition: all 0.5s ease;
+        }
+
+        .masonry-item:hover img {
+            filter: brightness(0.9);
+        }
+
+        .masonry-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 1.5rem 1.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .masonry-item:hover .masonry-overlay {
+            opacity: 1;
+        }
+
+        .masonry-overlay h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .masonry-overlay p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .masonry-like {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .masonry-item:hover .masonry-like {
+            opacity: 1;
+        }
+
+        .masonry-like:hover {
+            transform: scale(1.1);
+            background: var(--accent);
+        }
+
+        .masonry-like:hover svg {
+            fill: white;
+        }
+
+        .masonry-like svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--accent);
+            transition: fill 0.3s;
+        }
+
+        /* Filter Buttons */
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border: 2px solid var(--primary);
+            background: transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            color: var(--dark);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 6rem 2rem;
+            background: white;
+        }
+
+        .services-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .service-card {
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 20px;
+            background: var(--light);
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, var(--blush), var(--primary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+        }
+
+        .service-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #faf7f2 0%, #f4e4d4 100%);
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            background: var(--light);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo span {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 10px;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--dark);
+            border: none;
+            transition: transform 0.3s;
+        }
+
+        .lightbox-close:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Scroll to top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            border: none;
+            box-shadow: 0 5px 20px rgba(201, 123, 99, 0.4);
+            font-size: 1.2rem;
+            z-index: 999;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px);
+            background: var(--dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .masonry-grid {
+                columns: 3;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                transition: all 0.3s;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .masonry-grid {
+                columns: 2;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .masonry-grid {
+                columns: 1;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .about-stats {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Animations on scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">M<span>.</span>A<span>.</span>K</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-logo">
+			<img src="https://i.ibb.co.com/DH7QXpZM/IMG-20230909-WA0001.jpg" alt="IMG 20230909 WA0001" border="0" alt="MST. AMBIA KHATUN">
+               
+            </div>
+            <h1>
+                MST. AMBIA KHATUN
+                <span>Fresh Prints Gallery</span>
+            </h1>
+            <p>Curating beautiful moments through art, photography, and design. Welcome to my Pinterest-inspired gallery of fresh prints and creative inspiration.</p>
+            <a href="#gallery" class="hero-btn">Explore Gallery</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="about-container">
+            <div class="about-image reveal">
+                <img src="https://i.ibb.co.com/V8LqWS5/DSC-0063.jpg" alt="DSC 0063" border="0" alt="About MST. AMBIA KHATUN">
+            </div>
+            <div class="about-content reveal">
+                <h2>About <span>Me</span></h2>
+                <p>Hello! I'm MST. AMBIA KHATUN, a passionate curator of beautiful prints and visual stories. My gallery is a collection of carefully selected artwork, photography, and design pieces that inspire and delight.</p>
+                <p>Each print in my collection tells a unique story, from delicate botanical illustrations to bold abstract compositions. I believe art has the power to transform spaces and uplift spirits.</p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">Prints</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Artists</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">1000+</div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="section-header reveal">
+            <h2>Fresh Prints Gallery</h2>
+            <div class="line"></div>
+            <p>A Pinterest-inspired collection of beautiful artwork and photography</p>
+        </div>
+
+        <div class="filter-buttons reveal">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="floral">Floral</button>
+            <button class="filter-btn" data-filter="abstract">Abstract</button>
+            <button class="filter-btn" data-filter="nature">Nature</button>
+            <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
+        </div>
+
+        <div class="masonry-grid" id="masonryGrid">
+            <div class="masonry-item reveal" data-category="floral">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Pink Roses">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Pink Roses</h3>
+                    <p>Floral Collection</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="floral">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1372bc62c-2734-46f8-9d3f-e3f95f59d755.png" alt="Cherry Blossoms">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Cherry Blossoms</h3>
+                    <p>Watercolor Art</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="floral">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Wildflowers">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Wildflower Dreams</h3>
+                    <p>Botanical Photography</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="abstract">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Geometric Art">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Geometric Dreams</h3>
+                    <p>Abstract Art</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="lifestyle">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Coffee & Croissant">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Morning Bliss</h3>
+                    <p>Lifestyle Photography</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="nature">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Sunset">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Serene Sunset</h3>
+                    <p>Nature Photography</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="nature">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1962ded24-d039-46c1-8648-d6b2c28de8e4.png" alt="Monstera">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Tropical Leaves</h3>
+                    <p>Botanical Print</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="floral">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Rose Bouquet">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Rose Garden</h3>
+                    <p>Fresh Floral</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="lifestyle">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Cafe Life">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Cafe Moments</h3>
+                    <p>Cozy Lifestyle</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="nature">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Peaceful Lake">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Peaceful Waters</h3>
+                    <p>Landscape Art</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="abstract">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Modern Art">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Modern Shapes</h3>
+                    <p>Contemporary Design</p>
+                </div>
+            </div>
+
+            <div class="masonry-item reveal" data-category="floral">
+                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Lavender">
+                <div class="masonry-like">
+                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                </div>
+                <div class="masonry-overlay">
+                    <h3>Lavender Fields</h3>
+                    <p>Floral Photography</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header reveal">
+            <h2>What I Offer</h2>
+            <div class="line"></div>
+            <p>Services to bring beauty into your life</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">🎨</div>
+                <h3>Art Prints</h3>
+                <p>High-quality art prints curated from talented artists around the world. Perfect for home and office decor.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon"></div>
+                <h3>Photography</h3>
+                <p>Beautiful photography prints capturing moments, landscapes, and artistic compositions that inspire.</p>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">✨</div>
+                <h3>Custom Design</h3>
+                <p>Personalized design services to create unique prints that match your style and vision perfectly.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-container">
+            <div class="section-header reveal">
+                <h2>Get In Touch</h2>
+                <div class="line"></div>
+                <p>Have a question or want to collaborate? I'd love to hear from you!</p>
+            </div>
+            <form class="contact-form reveal" id="contactForm">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" placeholder="What's this about?">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Tell me more..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">MST. AMBIA <span>KHATUN</span></div>
+            <p>Fresh Prints Gallery | Curated with love</p>
+            <div class="social-links">
+                <a href="#" aria-label="Pinterest">📌</a>
+                <a href="#" aria-label="Instagram">📷</a>
+                <a href="#" aria-label="Facebook">📘</a>
+                <a href="#" aria-label="Twitter">🐦</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MST. AMBIA KHATUN. All rights reserved. | Designed with ❤️</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img src="" alt="Full view" id="lightboxImg">
+    </div>
+
+    <!-- Scroll to top -->
+    <button class="scroll-top" id="scrollTop">↑</button>
+
+    <script>
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Hamburger menu
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Filter functionality
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const masonryItems = document.querySelectorAll('.masonry-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                masonryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+
+        masonryItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (!e.target.closest('.masonry-like')) {
+                    const img = item.querySelector('img');
+                    lightboxImg.src = img.src;
+                    lightbox.classList.add('active');
+                }
+            });
+        });
+
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // Like button
+        document.querySelectorAll('.masonry-like').forEach(like => {
+            like.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const svg = like.querySelector('svg');
+                svg.style.fill = '#e74c3c';
+                like.style.background = '#ffe0e0';
+                like.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    like.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Scroll to top
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 150;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Contact form
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('.submit-btn');
+            btn.textContent = 'Message Sent! ✓';
+            btn.style.background = '#27ae60';
+            setTimeout(() => {
+                btn.textContent = 'Send Message';
+                btn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
