@@ -4,1159 +4,408 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MST. AMBIA KHATUN | Fresh Prints Gallery</title>
-        <meta name="p:domain_verify" content="f886fd8be26c9d728afe87c435bbcb0f"/>
-    <meta name="description" content="Fresh Prints Gallery by MST. AMBIA KHATUN - A Pinterest-inspired collection of beautiful artwork, photography, and design.">
-    <link href="https://cdn.jsdelivr.net/npm/fontsource-playfair-display@5.0.0/index.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/fontsource-poppins@5.0.0/index.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #d4a574;
-            --secondary: #f4e4d4;
-            --accent: #c97b63;
-            --dark: #2c2c2c;
-            --light: #faf7f2;
-            --gold: #c9a96e;
-            --blush: #e8b4b8;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--light);
-            color: var(--dark);
-            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
         }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(250, 247, 242, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(212, 165, 116, 0.2);
-        }
-
-        nav.scrolled {
-            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
+        h1, h2, h3, h4, h5, h6 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 700;
         }
-
-        .nav-logo span {
-            color: var(--accent);
+        .gallery-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
         }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-        }
-
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 5px;
-        }
-
-        .hamburger span {
-            width: 25px;
-            height: 2px;
-            background: var(--dark);
-            transition: all 0.3s;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(135deg, #faf7f2 0%, #f4e4d4 50%, #e8b4b8 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(201, 169, 110, 0.1) 0%, transparent 70%);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -50%;
-            left: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(232, 180, 184, 0.15) 0%, transparent 70%);
-            animation: float 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-        }
-
-        .hero-logo {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 2rem;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(201, 123, 99, 0.3);
-            animation: fadeInUp 1s ease;
-            border: 5px solid white;
-        }
-
-        .hero-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            animation: fadeInUp 1s ease 0.2s both;
-            letter-spacing: 2px;
-        }
-
-        .hero h1 span {
-            color: var(--accent);
-            display: block;
-            font-size: 1.2rem;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 400;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-top: 0.5rem;
-        }
-
-        .hero p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 2rem;
-            animation: fadeInUp 1s ease 0.4s both;
-            line-height: 1.8;
-        }
-
-        .hero-btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: var(--accent);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 500;
-            transition: all 0.3s;
-            animation: fadeInUp 1s ease 0.6s both;
-            box-shadow: 0 10px 30px rgba(201, 123, 99, 0.3);
-        }
-
-        .hero-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(201, 123, 99, 0.4);
-            background: var(--dark);
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* About Section */
-        .about {
-            padding: 6rem 2rem;
-            background: white;
-        }
-
-        .about-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-        }
-
-        .about-image {
-            position: relative;
-        }
-
-        .about-image img {
-            width: 100%;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-        }
-
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: -20px;
-            right: 20px;
-            bottom: 20px;
-            border: 3px solid var(--primary);
-            border-radius: 20px;
-            z-index: -1;
-        }
-
-        .about-content h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .about-content h2 span {
-            color: var(--accent);
-        }
-
-        .about-content p {
-            color: #666;
-            line-height: 1.8;
-            margin-bottom: 1rem;
-        }
-
-        .about-stats {
-            display: flex;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: #999;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Gallery Section */
-        .gallery {
-            padding: 6rem 2rem;
-            background: var(--light);
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-header h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 1rem;
-        }
-
-        .section-header p {
-            color: #666;
-            font-size: 1.1rem;
-        }
-
-        .section-header .line {
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-            margin: 1rem auto;
-            border-radius: 2px;
-        }
-
-        /* Pinterest Masonry Grid */
-        .masonry-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            columns: 4;
-            column-gap: 1.5rem;
-        }
-
-        .masonry-item {
-            break-inside: avoid;
-            margin-bottom: 1.5rem;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .masonry-item:hover {
-            transform: scale(1.02);
-        }
-
-        .masonry-item img {
-            width: 100%;
-            display: block;
-            border-radius: 15px;
-            transition: all 0.5s ease;
-        }
-
-        .masonry-item:hover img {
-            filter: brightness(0.9);
-        }
-
-        .masonry-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 2rem 1.5rem 1.5rem;
-            background: linear-gradient(transparent, rgba(0,0,0,0.7));
-            color: white;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .masonry-item:hover .masonry-overlay {
-            opacity: 1;
-        }
-
-        .masonry-overlay h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .masonry-overlay p {
-            font-size: 0.8rem;
-            opacity: 0.9;
-        }
-
-        .masonry-like {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 35px;
-            height: 35px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: all 0.3s;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        .masonry-item:hover .masonry-like {
-            opacity: 1;
-        }
-
-        .masonry-like:hover {
-            transform: scale(1.1);
-            background: var(--accent);
-        }
-
-        .masonry-like:hover svg {
-            fill: white;
-        }
-
-        .masonry-like svg {
-            width: 18px;
-            height: 18px;
-            fill: var(--accent);
-            transition: fill 0.3s;
-        }
-
-        /* Filter Buttons */
-        .filter-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 0.6rem 1.5rem;
-            border: 2px solid var(--primary);
-            background: transparent;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            color: var(--dark);
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 6rem 2rem;
-            background: white;
-        }
-
-        .services-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .service-card {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-radius: 20px;
-            background: var(--light);
-            transition: all 0.3s;
-            border: 1px solid transparent;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-            border-color: var(--primary);
-        }
-
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, var(--blush), var(--primary));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-        }
-
-        .service-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .service-card p {
-            color: #666;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, #faf7f2 0%, #f4e4d4 100%);
-        }
-
-        .contact-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .contact-form {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--dark);
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-            background: var(--light);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 1rem;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .submit-btn:hover {
-            background: var(--dark);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-logo span {
-            color: var(--accent);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .social-links a {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 1.2rem;
-        }
-
-        .social-links a:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.1);
-            padding-top: 1.5rem;
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            color: rgba(255,255,255,0.6);
-        }
-
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .lightbox.active {
-            display: flex;
-        }
-
-        .lightbox img {
-            max-width: 90%;
-            max-height: 90vh;
-            border-radius: 10px;
-            object-fit: contain;
-        }
-
-        .lightbox-close {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--dark);
-            border: none;
-            transition: transform 0.3s;
-        }
-
-        .lightbox-close:hover {
-            transform: rotate(90deg);
-        }
-
-        /* Scroll to top */
-        .scroll-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            border: none;
-            box-shadow: 0 5px 20px rgba(201, 123, 99, 0.4);
-            font-size: 1.2rem;
-            z-index: 999;
-        }
-
-        .scroll-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scroll-top:hover {
+        .gallery-item:hover {
             transform: translateY(-5px);
-            background: var(--dark);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
         }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .masonry-grid {
-                columns: 3;
-            }
+        .filter-btn.active {
+            background-color: #be185d;
+            color: white;
         }
-
-        @media (max-width: 768px) {
-            .hamburger {
-                display: flex;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: 0;
-                right: 0;
-                background: white;
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1rem;
-                transform: translateY(-100%);
-                opacity: 0;
-                transition: all 0.3s;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            }
-
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .about-container {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .masonry-grid {
-                columns: 2;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-form {
-                padding: 2rem;
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 177.77%;
+            height: 0;
+            overflow: hidden;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        @media (max-width: 640px) {
+            .video-wrapper {
+                padding-bottom: 150%;
             }
         }
-
         @media (max-width: 480px) {
-            .masonry-grid {
-                columns: 1;
+            .video-wrapper {
+                padding-bottom: 130%;
             }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .about-stats {
-                flex-wrap: wrap;
-            }
-        }
-
-        /* Animations on scroll */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-50">
+
     <!-- Navigation -->
-    <nav id="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">M<span>.</span>A<span>.</span>K</a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <span class="text-2xl font-bold text-pink-600">M.A.K</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                        <a href="#about" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">About</a>
+                        <a href="#gallery" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Gallery</a>
+                        <a href="#services" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Services</a>
+                        <a href="#contact" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-pink-600">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#gallery" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
+                <a href="#services" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Services</a>
+                <a href="#contact" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <div class="hero-logo">
-			<img src="https://i.ibb.co.com/DH7QXpZM/IMG-20230909-WA0001.jpg" alt="IMG 20230909 WA0001" border="0" alt="MST. AMBIA KHATUN">
-               
+    <section id="home" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-50 via-white to-purple-50">
+        <div class="max-w-7xl mx-auto text-center">
+            <div class="mb-8 relative inline-block">
+                <img src="https://i.ibb.co.com/DH7QXpZM/IMG-20230909-WA0001.jpg" alt="MST. AMBIA KHATUN" class="w-32 h-32 rounded-full object-cover border-4 border-pink-300 shadow-lg mx-auto">
+                <div class="absolute bottom-0 right-0 bg-pink-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-xs">✨</div>
             </div>
-            <h1>
-                MST. AMBIA KHATUN
-                <span>Fresh Prints Gallery</span>
-            </h1>
-            <p>Curating beautiful moments through art, photography, and design. Welcome to my Pinterest-inspired gallery of fresh prints and creative inspiration.</p>
-            <a href="#gallery" class="hero-btn">Explore Gallery</a>
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-4">MST. AMBIA KHATUN</h1>
+            <h2 class="text-2xl md:text-3xl text-pink-600 mb-6">Fresh Prints Gallery</h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-10">Curating beautiful moments through art, photography, and design. Welcome to my Pinterest-inspired gallery of fresh prints and creative inspiration.</p>
+            <a href="#gallery" class="inline-block bg-pink-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-pink-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">Explore Gallery</a>
         </div>
     </section>
 
     <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-container">
-            <div class="about-image reveal">
-                <img src="https://i.ibb.co.com/V8LqWS5/DSC-0063.jpg" alt="DSC 0063" border="0" alt="About MST. AMBIA KHATUN">
-            </div>
-            <div class="about-content reveal">
-                <h2>About <span>Me</span></h2>
-                <p>Hello! I'm MST. AMBIA KHATUN, a passionate curator of beautiful prints and visual stories. My gallery is a collection of carefully selected artwork, photography, and design pieces that inspire and delight.</p>
-                <p>Each print in my collection tells a unique story, from delicate botanical illustrations to bold abstract compositions. I believe art has the power to transform spaces and uplift spirits.</p>
-                <div class="about-stats">
-                    <div class="stat">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Prints</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">Artists</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">1000+</div>
-                        <div class="stat-label">Happy Clients</div>
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <img src="https://i.ibb.co.com/V8LqWS5/DSC-0063.jpg" alt="About Me" class="rounded-2xl shadow-2xl w-full">
+                </div>
+                <div>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-6">About Me</h2>
+                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">Hello! I'm MST. AMBIA KHATUN, a passionate curator of beautiful prints and visual stories. My gallery is a collection of carefully selected artwork, photography, and design pieces that inspire and delight.</p>
+                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">Each print in my collection tells a unique story, from delicate botanical illustrations to bold abstract compositions. I believe art has the power to transform spaces and uplift spirits.</p>
+                    <div class="grid grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-pink-600">150+</div>
+                            <div class="text-gray-600">Prints</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-pink-600">50+</div>
+                            <div class="text-gray-600">Artists</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-pink-600">1000+</div>
+                            <div class="text-gray-600">Happy Clients</div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Video Section -->
+    <section class="py-20 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">🎬 Featured Video</h2>
+                <p class="text-xl text-gray-600">Watch my latest cooking creation</p>
+            </div>
+            <div class="video-container">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://www.youtube.com/embed/sFLJSNSI6OU" 
+                        title="Cooking Pizza 🍕 & Chicken Shawarma 🌯 | Satisfying Food ASMR #shorts" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <p class="text-gray-700 text-lg font-semibold">🍕 Cooking Pizza & Chicken Shawarma 🌯</p>
+                <p class="text-gray-600">Satisfying Food ASMR</p>
             </div>
         </div>
     </section>
 
     <!-- Gallery Section -->
-    <section class="gallery" id="gallery">
-        <div class="section-header reveal">
-            <h2>Fresh Prints Gallery</h2>
-            <div class="line"></div>
-            <p>A Pinterest-inspired collection of beautiful artwork and photography</p>
-        </div>
-
-        <div class="filter-buttons reveal">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="floral">Floral</button>
-            <button class="filter-btn" data-filter="abstract">Abstract</button>
-            <button class="filter-btn" data-filter="nature">Nature</button>
-            <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
-        </div>
-
-        <div class="masonry-grid" id="masonryGrid">
-            <div class="masonry-item reveal" data-category="floral">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Pink Roses">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                </div>
-                <div class="masonry-overlay">
-                    <h3>Pink Roses</h3>
-                    <p>Floral Collection</p>
+    <section id="gallery" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Fresh Prints Gallery</h2>
+                <p class="text-xl text-gray-600 mb-8">A Pinterest-inspired collection of beautiful artwork and photography</p>
+                
+                <!-- Filter Buttons -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12">
+                    <button class="filter-btn active px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="all">All</button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="floral">Floral</button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="abstract">Abstract</button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="nature">Nature</button>
+                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="lifestyle">Lifestyle</button>
                 </div>
             </div>
 
-            <div class="masonry-item reveal" data-category="floral">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1372bc62c-2734-46f8-9d3f-e3f95f59d755.png" alt="Cherry Blossoms">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Pink Roses" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Pink Roses</h3>
+                        <p class="text-gray-600">Floral Collection</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Cherry Blossoms</h3>
-                    <p>Watercolor Art</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="floral">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Wildflowers">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1372bc62c-2734-46f8-9d3f-e3f95f59d755.png" alt="Cherry Blossoms" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Cherry Blossoms</h3>
+                        <p class="text-gray-600">Watercolor Art</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Wildflower Dreams</h3>
-                    <p>Botanical Photography</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="abstract">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Geometric Art">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="nature">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Wildflower Dreams" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Wildflower Dreams</h3>
+                        <p class="text-gray-600">Botanical Photography</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Geometric Dreams</h3>
-                    <p>Abstract Art</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="lifestyle">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Coffee & Croissant">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="abstract">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Geometric Dreams" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Geometric Dreams</h3>
+                        <p class="text-gray-600">Abstract Art</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Morning Bliss</h3>
-                    <p>Lifestyle Photography</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="nature">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Sunset">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="lifestyle">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Morning Bliss" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Morning Bliss</h3>
+                        <p class="text-gray-600">Lifestyle Photography</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Serene Sunset</h3>
-                    <p>Nature Photography</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="nature">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1962ded24-d039-46c1-8648-d6b2c28de8e4.png" alt="Monstera">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="nature">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Serene Sunset" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Serene Sunset</h3>
+                        <p class="text-gray-600">Nature Photography</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Tropical Leaves</h3>
-                    <p>Botanical Print</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="floral">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Rose Bouquet">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1962ded24-d039-46c1-8648-d6b2c28de8e4.png" alt="Tropical Leaves" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Tropical Leaves</h3>
+                        <p class="text-gray-600">Botanical Print</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Rose Garden</h3>
-                    <p>Fresh Floral</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="lifestyle">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Cafe Life">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Rose Garden" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Rose Garden</h3>
+                        <p class="text-gray-600">Fresh Floral</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Cafe Moments</h3>
-                    <p>Cozy Lifestyle</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="nature">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Peaceful Lake">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="lifestyle">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Cafe Moments" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Cafe Moments</h3>
+                        <p class="text-gray-600">Cozy Lifestyle</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Peaceful Waters</h3>
-                    <p>Landscape Art</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="abstract">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Modern Art">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="nature">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Peaceful Waters" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Peaceful Waters</h3>
+                        <p class="text-gray-600">Landscape Art</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Modern Shapes</h3>
-                    <p>Contemporary Design</p>
-                </div>
-            </div>
 
-            <div class="masonry-item reveal" data-category="floral">
-                <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Lavender">
-                <div class="masonry-like">
-                    <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="abstract">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Modern Shapes" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Modern Shapes</h3>
+                        <p class="text-gray-600">Contemporary Design</p>
+                    </div>
                 </div>
-                <div class="masonry-overlay">
-                    <h3>Lavender Fields</h3>
-                    <p>Floral Photography</p>
+
+                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Lavender Fields" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Lavender Fields</h3>
+                        <p class="text-gray-600">Floral Photography</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="section-header reveal">
-            <h2>What I Offer</h2>
-            <div class="line"></div>
-            <p>Services to bring beauty into your life</p>
-        </div>
-        <div class="services-grid">
-            <div class="service-card reveal">
-                <div class="service-icon">🎨</div>
-                <h3>Art Prints</h3>
-                <p>High-quality art prints curated from talented artists around the world. Perfect for home and office decor.</p>
+    <section id="services" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">What I Offer</h2>
+                <p class="text-xl text-gray-600">Services to bring beauty into your life</p>
             </div>
-            <div class="service-card reveal">
-                <div class="service-icon"></div>
-                <h3>Photography</h3>
-                <p>Beautiful photography prints capturing moments, landscapes, and artistic compositions that inspire.</p>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">✨</div>
-                <h3>Custom Design</h3>
-                <p>Personalized design services to create unique prints that match your style and vision perfectly.</p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-pink-50 to-purple-50 hover:shadow-xl transition">
+                    <div class="text-5xl mb-4">🎨</div>
+                    <h3 class="text-2xl font-semibold mb-4">Art Prints</h3>
+                    <p class="text-gray-600">High-quality art prints curated from talented artists around the world. Perfect for home and office decor.</p>
+                </div>
+
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-50 to-blue-50 hover:shadow-xl transition">
+                    <div class="text-5xl mb-4">📷</div>
+                    <h3 class="text-2xl font-semibold mb-4">Photography</h3>
+                    <p class="text-gray-600">Beautiful photography prints capturing moments, landscapes, and artistic compositions that inspire.</p>
+                </div>
+
+                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-pink-50 hover:shadow-xl transition">
+                    <div class="text-5xl mb-4">✨</div>
+                    <h3 class="text-2xl font-semibold mb-4">Custom Design</h3>
+                    <p class="text-gray-600">Personalized design services to create unique prints that match your style and vision perfectly.</p>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="contact-container">
-            <div class="section-header reveal">
-                <h2>Get In Touch</h2>
-                <div class="line"></div>
-                <p>Have a question or want to collaborate? I'd love to hear from you!</p>
+    <section id="contact" class="py-20 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+                <p class="text-xl text-gray-600">Have a question or want to collaborate? I'd love to hear from you!</p>
             </div>
-            <form class="contact-form reveal" id="contactForm">
-                <div class="form-group">
-                    <label for="name">Your Name</label>
-                    <input type="text" id="name" placeholder="Enter your name" required>
+
+            <form class="bg-white rounded-2xl shadow-xl p-8 md:p-12" onsubmit="event.preventDefault(); alert('Thank you for your message! I will get back to you soon.');">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Your Name</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition" placeholder="John Doe">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">Email Address</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition" placeholder="john@example.com">
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="Enter your email" required>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2">Subject</label>
+                    <input type="text" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition" placeholder="How can I help you?">
                 </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" placeholder="What's this about?">
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2">Message</label>
+                    <textarea rows="5" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition resize-none" placeholder="Your message..."></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" placeholder="Tell me more..." required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">Send Message</button>
+                <button type="submit" class="w-full bg-pink-600 text-white py-4 rounded-lg font-semibold hover:bg-pink-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">Send Message</button>
             </form>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">MST. AMBIA <span>KHATUN</span></div>
-            <p>Fresh Prints Gallery | Curated with love</p>
-            <div class="social-links">
-                <a href="#" aria-label="Pinterest">📌</a>
-                <a href="#" aria-label="Instagram">📷</a>
-                <a href="#" aria-label="Facebook">📘</a>
-                <a href="#" aria-label="Twitter">🐦</a>
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">MST. AMBIA KHATUN</h3>
+                    <p class="text-gray-400">Fresh Prints Gallery | Curated with love</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-pink-400 transition">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-pink-400 transition">About</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-pink-400 transition">Gallery</a></li>
+                        <li><a href="#services" class="text-gray-400 hover:text-pink-400 transition">Services</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Follow Me</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 MST. AMBIA KHATUN. All rights reserved. | Designed with ❤️</p>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2026 MST. AMBIA KHATUN. All rights reserved. | Designed with ❤️</p>
             </div>
         </div>
     </footer>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <button class="lightbox-close" id="lightboxClose">&times;</button>
-        <img src="" alt="Full view" id="lightboxImg">
-    </div>
-
-    <!-- Scroll to top -->
-    <button class="scroll-top" id="scrollTop">↑</button>
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 bg-pink-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-pink-700 transition opacity-0 pointer-events-none transform translate-y-10 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <script>
-        // Navigation scroll effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
         });
 
-        // Hamburger menu
-        const hamburger = document.getElementById('hamburger');
-        const navLinks = document.getElementById('navLinks');
-        hamburger.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-
-        // Close menu on link click
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Filter functionality
+        // Gallery Filter
         const filterBtns = document.querySelectorAll('.filter-btn');
-        const masonryItems = document.querySelectorAll('.masonry-item');
+        const galleryItems = document.querySelectorAll('.gallery-item');
 
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 filterBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
-                const filter = btn.dataset.filter;
+                const filter = btn.getAttribute('data-filter');
 
-                masonryItems.forEach(item => {
-                    if (filter === 'all' || item.dataset.category === filter) {
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
                         item.style.display = 'block';
                         setTimeout(() => {
                             item.style.opacity = '1';
@@ -1173,100 +422,42 @@
             });
         });
 
-        // Lightbox
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightboxImg');
-        const lightboxClose = document.getElementById('lightboxClose');
-
-        masonryItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                if (!e.target.closest('.masonry-like')) {
-                    const img = item.querySelector('img');
-                    lightboxImg.src = img.src;
-                    lightbox.classList.add('active');
-                }
-            });
-        });
-
-        lightboxClose.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
-
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
-            }
-        });
-
-        // Like button
-        document.querySelectorAll('.masonry-like').forEach(like => {
-            like.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const svg = like.querySelector('svg');
-                svg.style.fill = '#e74c3c';
-                like.style.background = '#ffe0e0';
-                like.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    like.style.transform = 'scale(1)';
-                }, 200);
-            });
-        });
-
-        // Scroll to top
-        const scrollTopBtn = document.getElementById('scrollTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                scrollTopBtn.classList.add('visible');
-            } else {
-                scrollTopBtn.classList.remove('visible');
-            }
-        });
-
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Reveal on scroll
-        const reveals = document.querySelectorAll('.reveal');
-        const revealOnScroll = () => {
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                const revealPoint = 150;
-
-                if (elementTop < windowHeight - revealPoint) {
-                    el.classList.add('visible');
-                }
-            });
-        };
-
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll();
-
-        // Contact form
-        document.getElementById('contactForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('.submit-btn');
-            btn.textContent = 'Message Sent! ✓';
-            btn.style.background = '#27ae60';
-            setTimeout(() => {
-                btn.textContent = 'Send Message';
-                btn.style.background = '';
-                e.target.reset();
-            }, 3000);
-        });
-
-        // Smooth scroll for anchor links
+        // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
+                mobileMenu.classList.add('hidden');
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
         });
+
+        // Back to Top Button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
+            } else {
+                backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
     </script>
 </body>
 </html>
-
