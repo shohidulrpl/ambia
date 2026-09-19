@@ -4,286 +4,1783 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MST. AMBIA KHATUN | Fresh Prints Gallery</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        /* ===== CSS RESET & VARIABLES ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-card: #18181b;
+            --bg-card-hover: #1f1f23;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-1: #c084fc;
+            --accent-2: #f472b6;
+            --accent-3: #60a5fa;
+            --accent-4: #34d399;
+            --gradient-1: linear-gradient(135deg, #c084fc, #f472b6);
+            --gradient-2: linear-gradient(135deg, #60a5fa, #c084fc);
+            --gradient-3: linear-gradient(135deg, #f472b6, #fb923c);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-bg-hover: rgba(255, 255, 255, 0.06);
+            --radius-sm: 12px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-1) var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-1);
+            border-radius: 10px;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
         }
-        h1, h2, h3, h4, h5, h6 {
+
+        /* ===== CUSTOM CURSOR ===== */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-1);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transition: transform 0.1s;
+            mix-blend-mode: difference;
+        }
+
+        .cursor-ring {
+            width: 40px;
+            height: 40px;
+            border: 1.5px solid var(--accent-2);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transition: all 0.15s ease-out;
+            mix-blend-mode: difference;
+        }
+
+        /* ===== LOADER ===== */
+        .loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg-primary);
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 24px;
+            transition: opacity 0.6s, visibility 0.6s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
             font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .gallery-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
-        }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-        .filter-btn.active {
-            background-color: #be185d;
-            color: white;
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            max-width: 400px;
-            margin: 0 auto;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 177.77%;
-            height: 0;
+
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--bg-card);
+            border-radius: 2px;
             overflow: hidden;
         }
-        .video-wrapper iframe {
-            position: absolute;
+
+        .loader-bar::after {
+            content: '';
+            display: block;
+            width: 0%;
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            animation: loadBar 1.8s ease-in-out forwards;
+        }
+
+        @keyframes loadBar {
+            to { width: 100%; }
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
             top: 0;
             left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 40px;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(10, 10, 11, 0.8);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-logo-icon {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient-1);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .nav-logo-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-logo-text span {
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 0.8rem;
+            display: block;
+            letter-spacing: 0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 8px 18px;
+            border-radius: 100px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--text-primary);
+            background: var(--glass-bg-hover);
+        }
+
+        .nav-cta {
+            background: var(--gradient-1) !important;
+            color: var(--bg-primary) !important;
+            font-weight: 600 !important;
+            padding: 10px 24px !important;
+        }
+
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(192, 132, 252, 0.3);
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+        }
+
+        .menu-toggle span {
+            width: 24px;
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 40px 80px;
+        }
+
+        .hero-bg-gradient {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        .hero-bg-gradient.g1 {
+            top: -200px;
+            right: -100px;
+            background: var(--accent-1);
+        }
+
+        .hero-bg-gradient.g2 {
+            bottom: -200px;
+            left: -100px;
+            background: var(--accent-2);
+        }
+
+        .hero-bg-gradient.g3 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--accent-3);
+            opacity: 0.08;
+        }
+
+        .hero-grid-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 8px 18px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            width: fit-content;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent-4);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .line span {
+            display: inline-block;
+            transform: translateY(110%);
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .hero-title .line:nth-child(2) span { animation-delay: 0.15s; }
+        .hero-title .line:nth-child(3) span { animation-delay: 0.3s; }
+
+        @keyframes slideUp {
+            to { transform: translateY(0); }
+        }
+
+        .hero-title .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-title .italic {
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.7s forwards;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 32px;
+            border-radius: 100px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(192, 132, 252, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-bg-hover);
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-2px);
+        }
+
+        .btn-arrow {
+            transition: transform 0.3s;
+        }
+
+        .btn:hover .btn-arrow {
+            transform: translateX(4px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 16px;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.9s forwards;
+        }
+
+        .hero-stat {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stat-label {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Hero Image */
+        .hero-visual {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 1s 0.4s forwards;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+            width: 420px;
+            height: 520px;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+        }
+
+        .hero-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 6s ease;
+        }
+
+        .hero-image-wrapper:hover img {
+            transform: scale(1.08);
+        }
+
+        .hero-image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,11,0.6) 0%, transparent 50%);
+        }
+
+        .hero-float-card {
+            position: absolute;
+            background: rgba(17, 17, 19, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-float-card.card-1 {
+            bottom: 40px;
+            left: -40px;
+            animation-delay: 0s;
+        }
+
+        .hero-float-card.card-2 {
+            top: 40px;
+            right: -30px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .float-card-icon.purple { background: rgba(192, 132, 252, 0.15); }
+        .float-card-icon.pink { background: rgba(244, 114, 182, 0.15); }
+
+        .float-card-text {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+        }
+
+        .float-card-text strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        /* ===== MARQUEE ===== */
+        .marquee-section {
+            padding: 32px 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            overflow: hidden;
+            background: var(--bg-secondary);
+        }
+
+        .marquee-track {
+            display: flex;
+            animation: marquee 25s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding: 0 24px;
+            white-space: nowrap;
+        }
+
+        .marquee-item span {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .marquee-item span:hover {
+            color: var(--text-primary);
+        }
+
+        .marquee-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* ===== SECTION COMMON ===== */
+        .section {
+            padding: 120px 40px;
+            position: relative;
+        }
+
+        .section-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 72px;
+        }
+
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-1);
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .section-tag::before,
+        .section-tag::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--accent-1);
+            opacity: 0.4;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 16px auto 0;
+            line-height: 1.7;
+        }
+
+        /* ===== ABOUT - BENTO GRID ===== */
+        .about-section {
+            background: var(--bg-secondary);
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            gap: 20px;
+        }
+
+        .bento-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-1);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .bento-card:hover {
+            border-color: rgba(192, 132, 252, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .bento-card:hover::before {
+            opacity: 0.03;
+        }
+
+        .bento-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .bento-card.span-2 { grid-column: span 2; }
+        .bento-card.span-3 { grid-column: span 3; }
+        .bento-card.span-4 { grid-column: span 4; }
+        .bento-card.row-2 { grid-row: span 2; }
+
+        .bento-card.image-card {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .bento-card.image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .bento-card.image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .bento-about-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+        }
+
+        .bento-about-text p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 0.95rem;
+        }
+
+        .bento-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 180px;
+        }
+
+        .bento-stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .bento-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .bento-quote {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bento-quote blockquote {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+
+        .bento-quote blockquote::before {
+            content: '"';
+            font-size: 4rem;
+            line-height: 0;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        /* ===== VIDEO SECTION ===== */
+        .video-section {
+            background: var(--bg-primary);
+        }
+
+        .video-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            position: relative;
+            aspect-ratio: 16/9;
+            background: var(--bg-card);
+        }
+
+        .video-wrapper iframe {
             width: 100%;
             height: 100%;
             border: none;
         }
-        @media (max-width: 640px) {
-            .video-wrapper {
-                padding-bottom: 150%;
+
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-secondary));
+        }
+
+        .play-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            color: white;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 60px rgba(192, 132, 252, 0.4);
+        }
+
+        .video-label {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+        }
+
+        .video-label strong {
+            color: var(--text-primary);
+        }
+
+        /* ===== GALLERY ===== */
+        .gallery-section {
+            background: var(--bg-secondary);
+        }
+
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 24px;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--gradient-1);
+            color: var(--bg-primary);
+            border-color: transparent;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            cursor: pointer;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .gallery-item:nth-child(1),
+        .gallery-item:nth-child(6) {
+            grid-row: span 2;
+            aspect-ratio: auto;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(192, 132, 252, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,10,11,0.9) 0%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .gallery-overlay span {
+            font-size: 0.82rem;
+            color: var(--accent-1);
+        }
+
+        /* ===== SERVICES ===== */
+        .services-section {
+            background: var(--bg-primary);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .service-card {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-lg);
+            padding: 48px 36px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            group: true;
+        }
+
+        .service-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-1);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .service-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(192, 132, 252, 0.15);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 28px;
+            transition: var(--transition);
+        }
+
+        .service-card:nth-child(1) .service-icon { background: rgba(192, 132, 252, 0.1); }
+        .service-card:nth-child(2) .service-icon { background: rgba(96, 165, 250, 0.1); }
+        .service-card:nth-child(3) .service-icon { background: rgba(244, 114, 182, 0.1); }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 24px;
+            color: var(--accent-1);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .service-link:hover {
+            gap: 14px;
+        }
+
+        /* ===== CONTACT ===== */
+        .contact-section {
+            background: var(--bg-secondary);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: start;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .contact-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            line-height: 1.2;
+        }
+
+        .contact-info h3 .gradient-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-info > p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .contact-detail-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-sm);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-detail-text {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-detail-text strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 2px;
+        }
+
+        .contact-form-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: 48px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-1);
+            box-shadow: 0 0 0 3px rgba(192, 132, 252, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            font-size: 1rem;
+            justify-content: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--glass-border);
+            padding: 60px 40px 32px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        .footer-col h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-1);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            background: var(--gradient-1);
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            color: var(--text-muted);
+            font-size: 0.82rem;
+        }
+
+        .footer-bottom p span {
+            color: var(--accent-2);
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* ===== BACK TO TOP ===== */
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--gradient-1);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(192, 132, 252, 0.4);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 48px;
+                text-align: center;
+            }
+
+            .hero-content { align-items: center; }
+            .hero-description { max-width: 100%; }
+            .hero-buttons { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .hero-visual { order: -1; }
+            .hero-image-wrapper { width: 320px; height: 400px; }
+            .hero-float-card.card-1 { left: 0; }
+            .hero-float-card.card-2 { right: 0; }
+
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .bento-card.span-3 { grid-column: span 2; }
+
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .gallery-item:nth-child(1),
+            .gallery-item:nth-child(6) {
+                grid-row: span 1;
+                aspect-ratio: 3/4;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 32px;
             }
         }
-        @media (max-width: 480px) {
-            .video-wrapper {
-                padding-bottom: 130%;
+
+        @media (max-width: 768px) {
+            .section { padding: 80px 20px; }
+            .navbar { padding: 12px 20px; }
+            .hero { padding: 100px 20px 60px; }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: var(--bg-secondary);
+                border-left: 1px solid var(--glass-border);
+                flex-direction: column;
+                padding: 80px 32px 32px;
+                gap: 4px;
+                transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
+
+            .nav-links.open {
+                right: 0;
+            }
+
+            .nav-links a {
+                width: 100%;
+                padding: 14px 18px;
+                border-radius: var(--radius-sm);
+            }
+
+            .menu-toggle { display: flex; }
+
+            .bento-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bento-card.span-2,
+            .bento-card.span-3,
+            .bento-card.span-4 {
+                grid-column: span 1;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                gap: 24px;
+            }
+
+            .hero-float-card { display: none; }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+            .cursor-dot, .cursor-ring { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2.4rem; }
+            .hero-image-wrapper { width: 260px; height: 340px; }
+            .gallery-grid { grid-template-columns: 1fr; }
+            .contact-form-wrapper { padding: 28px 20px; }
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body>
+
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">M.A.K</div>
+        <div class="loader-bar"></div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50 transition-all duration-300" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0 flex items-center gap-2">
-                    <span class="text-2xl font-bold text-pink-600">M.A.K</span>
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <div class="nav-logo-icon">MAK</div>
+                <div class="nav-logo-text">
+                    Ambia Khatun
+                    <span>Fresh Prints Gallery</span>
                 </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
-                        <a href="#home" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
-                        <a href="#about" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">About</a>
-                        <a href="#gallery" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Gallery</a>
-                        <a href="#services" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Services</a>
-                        <a href="#contact" class="text-gray-700 hover:text-pink-600 px-3 py-2 rounded-md text-sm font-medium transition">Contact</a>
-                    </div>
-                </div>
-                <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-pink-600">
-                        <i class="fas fa-bars text-2xl"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#home" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#about" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="#gallery" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
-                <a href="#services" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Services</a>
-                <a href="#contact" class="text-gray-700 hover:text-pink-600 block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact" class="nav-cta">Contact</a></li>
+            </ul>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-pink-50 via-white to-purple-50">
-        <div class="max-w-7xl mx-auto text-center">
-            <div class="mb-8 relative inline-block">
-                <img src="https://i.ibb.co.com/DH7QXpZM/IMG-20230909-WA0001.jpg" alt="MST. AMBIA KHATUN" class="w-32 h-32 rounded-full object-cover border-4 border-pink-300 shadow-lg mx-auto">
-                <div class="absolute bottom-0 right-0 bg-pink-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-xs">✨</div>
-            </div>
-            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-4">MST. AMBIA KHATUN</h1>
-            <h2 class="text-2xl md:text-3xl text-pink-600 mb-6">Fresh Prints Gallery</h2>
-            <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-10">Curating beautiful moments through art, photography, and design. Welcome to my Pinterest-inspired gallery of fresh prints and creative inspiration.</p>
-            <a href="#gallery" class="inline-block bg-pink-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-pink-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">Explore Gallery</a>
-        </div>
-    </section>
+    <section class="hero" id="home">
+        <div class="hero-bg-gradient g1"></div>
+        <div class="hero-bg-gradient g2"></div>
+        <div class="hero-bg-gradient g3"></div>
+        <div class="hero-grid-overlay"></div>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <img src="https://i.ibb.co.com/V8LqWS5/DSC-0063.jpg" alt="About Me" class="rounded-2xl shadow-2xl w-full">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="dot"></span>
+                    Available for collaborations
                 </div>
-                <div>
-                    <h2 class="text-4xl font-bold text-gray-900 mb-6">About Me</h2>
-                    <p class="text-gray-600 text-lg mb-6 leading-relaxed">Hello! I'm MST. AMBIA KHATUN, a passionate curator of beautiful prints and visual stories. My gallery is a collection of carefully selected artwork, photography, and design pieces that inspire and delight.</p>
-                    <p class="text-gray-600 text-lg mb-8 leading-relaxed">Each print in my collection tells a unique story, from delicate botanical illustrations to bold abstract compositions. I believe art has the power to transform spaces and uplift spirits.</p>
-                    <div class="grid grid-cols-3 gap-6">
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-pink-600">150+</div>
-                            <div class="text-gray-600">Prints</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-pink-600">50+</div>
-                            <div class="text-gray-600">Artists</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-3xl font-bold text-pink-600">1000+</div>
-                            <div class="text-gray-600">Happy Clients</div>
-                        </div>
+                <h1 class="hero-title">
+                    <span class="line"><span>Curating</span></span>
+                    <span class="line"><span class="gradient-text">Beautiful</span></span>
+                    <span class="line"><span class="italic">Moments</span></span>
+                </h1>
+                <p class="hero-description">
+                    Through art, photography, and design — welcome to my Pinterest-inspired gallery of fresh prints and creative inspiration.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#gallery" class="btn btn-primary">
+                        Explore Gallery
+                        <span class="btn-arrow">→</span>
+                    </a>
+                    <a href="#about" class="btn btn-secondary">
+                        About Me
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" data-count="150">0</span>
+                        <span class="hero-stat-label">Prints</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" data-count="50">0</span>
+                        <span class="hero-stat-label">Artists</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number" data-count="1000">0</span>
+                        <span class="hero-stat-label">Clients</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="hero-image-wrapper">
+                    <img src="https://i.ibb.co.com/DH7QXpZM/IMG-20230909-WA0001.jpg" alt="MST. Ambia Khatun">
+                    <div class="hero-image-overlay"></div>
+                </div>
+                <div class="hero-float-card card-1">
+                    <div class="float-card-icon purple">🎨</div>
+                    <div class="float-card-text">
+                        <strong>150+ Prints</strong>
+                        Curated Collection
+                    </div>
+                </div>
+                <div class="hero-float-card card-2">
+                    <div class="float-card-icon pink">✨</div>
+                    <div class="float-card-text">
+                        <strong>1000+ Happy</strong>
+                        Satisfied Clients
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Featured Video Section -->
-    <section class="py-20 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">🎬 Featured Video</h2>
-                <p class="text-xl text-gray-600">Watch my latest cooking creation</p>
+    <!-- Marquee -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item"><span>Art Prints</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Photography</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Floral Design</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Abstract Art</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Nature</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Lifestyle</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Custom Design</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Botanical</span><div class="marquee-dot"></div></div>
+            <!-- Duplicate for seamless loop -->
+            <div class="marquee-item"><span>Art Prints</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Photography</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Floral Design</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Abstract Art</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Nature</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Lifestyle</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Custom Design</span><div class="marquee-dot"></div></div>
+            <div class="marquee-item"><span>Botanical</span><div class="marquee-dot"></div></div>
+        </div>
+    </div>
+
+    <!-- About Section - Bento Grid -->
+    <section class="section about-section" id="about">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <div class="section-tag">About Me</div>
+                <h2 class="section-title">The Story Behind<br>the <span class="gradient-text">Gallery</span></h2>
             </div>
-            <div class="video-container">
-                <div class="video-wrapper">
-                    <iframe 
-                        src="https://www.youtube.com/embed/sFLJSNSI6OU" 
-                        title="Cooking Pizza 🍕 & Chicken Shawarma 🌯 | Satisfying Food ASMR #shorts" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
-                     <iframe 
-                        src="https://www.youtube.com/shorts/HAFhD3q0lRw" 
-                        title="Miniature ASMR Cooking & Sweet Tasting – Jalebi and Rosogulla sweets | Satisfying Food ASMR #shorts" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                    </iframe>
+
+            <div class="bento-grid">
+                <div class="bento-card span-2 row-2 image-card reveal reveal-delay-1">
+                    <img src="https://i.ibb.co.com/V8LqWS5/DSC-0063.jpg" alt="About Ambia">
+                </div>
+
+                <div class="bento-card span-2 bento-about-text reveal reveal-delay-2">
+                    <h3>Hello! I'm MST. AMBIA KHATUN</h3>
+                    <p>A passionate curator of beautiful prints and visual stories. My gallery is a collection of carefully selected artwork, photography, and design pieces that inspire and delight. Each print in my collection tells a unique story, from delicate botanical illustrations to bold abstract compositions.</p>
+                </div>
+
+                <div class="bento-card bento-stat reveal reveal-delay-1">
+                    <div class="bento-stat-number" data-count="150">0</div>
+                    <div class="bento-stat-label">Prints</div>
+                </div>
+
+                <div class="bento-card bento-stat reveal reveal-delay-2">
+                    <div class="bento-stat-number" data-count="50">0</div>
+                    <div class="bento-stat-label">Artists</div>
+                </div>
+
+                <div class="bento-card bento-stat reveal reveal-delay-3">
+                    <div class="bento-stat-number" data-count="1000">0</div>
+                    <div class="bento-stat-label">Happy Clients</div>
+                </div>
+
+                <div class="bento-card span-3 bento-quote reveal reveal-delay-2">
+                    <blockquote>
+                        I believe art has the power to transform spaces and uplift spirits. Every piece in this gallery is chosen with love and intention.
+                    </blockquote>
+                </div>
+
+                <div class="bento-card reveal reveal-delay-3">
+                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:12px;">
+                        <span style="font-size:2.5rem;">🌸</span>
+                        <strong style="font-size:1.1rem;">Fresh Prints</strong>
+                        <span style="color:var(--text-muted);font-size:0.85rem;">Curated with love since day one</span>
+                    </div>
                 </div>
             </div>
-            <div class="text-center mt-8">
-                <p class="text-gray-700 text-lg font-semibold">🍕 Cooking Pizza & Chicken Shawarma 🌯</p>
-                <p class="text-gray-600">Satisfying Food ASMR</p>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="section video-section">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <div class="section-tag">Featured</div>
+                <h2 class="section-title">Watch My Latest<br><span class="gradient-text">Creation</span></h2>
+                <p class="section-subtitle">🍕 Cooking Pizza & Chicken Shawarma 🌯 — Satisfying Food ASMR</p>
+            </div>
+            <div class="video-wrapper reveal">
+                <div class="video-placeholder" id="videoPlaceholder">
+                    <button class="play-btn" onclick="this.parentElement.innerHTML='<iframe src=\'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1\' allow=\'autoplay; encrypted-media\' allowfullscreen></iframe>'">
+                        ▶
+                    </button>
+                    <div class="video-label">
+                        <strong>🎬 Featured Video</strong><br>
+                        Click to play
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Fresh Prints Gallery</h2>
-                <p class="text-xl text-gray-600 mb-8">A Pinterest-inspired collection of beautiful artwork and photography</p>
-                
-                <!-- Filter Buttons -->
-                <div class="flex flex-wrap justify-center gap-4 mb-12">
-                    <button class="filter-btn active px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="all">All</button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="floral">Floral</button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="abstract">Abstract</button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="nature">Nature</button>
-                    <button class="filter-btn px-6 py-2 rounded-full border-2 border-pink-600 text-pink-600 font-medium transition hover:bg-pink-600 hover:text-white" data-filter="lifestyle">Lifestyle</button>
-                </div>
+    <section class="section gallery-section" id="gallery">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <div class="section-tag">Portfolio</div>
+                <h2 class="section-title">Fresh Prints<br><span class="gradient-text">Gallery</span></h2>
+                <p class="section-subtitle">A Pinterest-inspired collection of beautiful artwork and photography</p>
             </div>
 
-            <!-- Gallery Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Pink Roses" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Pink Roses</h3>
-                        <p class="text-gray-600">Floral Collection</p>
+            <div class="gallery-filters reveal">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="floral">Floral</button>
+                <button class="filter-btn" data-filter="abstract">Abstract</button>
+                <button class="filter-btn" data-filter="nature">Nature</button>
+                <button class="filter-btn" data-filter="lifestyle">Lifestyle</button>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item reveal reveal-delay-1" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Pink Roses" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Pink Roses</h4>
+                        <span>Floral Collection</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1372bc62c-2734-46f8-9d3f-e3f95f59d755.png" alt="Cherry Blossoms" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Cherry Blossoms</h3>
-                        <p class="text-gray-600">Watercolor Art</p>
+                <div class="gallery-item reveal reveal-delay-2" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1372bc62c-2734-46f8-9d3f-e3f95f59d755.png" alt="Cherry Blossoms" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Cherry Blossoms</h4>
+                        <span>Watercolor Art</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="nature">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Wildflower Dreams" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Wildflower Dreams</h3>
-                        <p class="text-gray-600">Botanical Photography</p>
+                <div class="gallery-item reveal reveal-delay-3" data-category="nature">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Wildflower Dreams" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Wildflower Dreams</h4>
+                        <span>Botanical Photography</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="abstract">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Geometric Dreams" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Geometric Dreams</h3>
-                        <p class="text-gray-600">Abstract Art</p>
+                <div class="gallery-item reveal reveal-delay-4" data-category="abstract">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Geometric Dreams" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Geometric Dreams</h4>
+                        <span>Abstract Art</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="lifestyle">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Morning Bliss" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Morning Bliss</h3>
-                        <p class="text-gray-600">Lifestyle Photography</p>
+                <div class="gallery-item reveal reveal-delay-1" data-category="lifestyle">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Morning Bliss" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Morning Bliss</h4>
+                        <span>Lifestyle Photography</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="nature">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Serene Sunset" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Serene Sunset</h3>
-                        <p class="text-gray-600">Nature Photography</p>
+                <div class="gallery-item reveal reveal-delay-2" data-category="nature">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Serene Sunset" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Serene Sunset</h4>
+                        <span>Nature Photography</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1962ded24-d039-46c1-8648-d6b2c28de8e4.png" alt="Tropical Leaves" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Tropical Leaves</h3>
-                        <p class="text-gray-600">Botanical Print</p>
+                <div class="gallery-item reveal reveal-delay-3" data-category="nature">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1962ded24-d039-46c1-8648-d6b2c28de8e4.png" alt="Tropical Leaves" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Tropical Leaves</h4>
+                        <span>Botanical Print</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Rose Garden" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Rose Garden</h3>
-                        <p class="text-gray-600">Fresh Floral</p>
+                <div class="gallery-item reveal reveal-delay-4" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/158e3da9e-cf9c-4702-893b-6bfe5d7afb94.png" alt="Rose Garden" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Rose Garden</h4>
+                        <span>Fresh Floral</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="lifestyle">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Cafe Moments" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Cafe Moments</h3>
-                        <p class="text-gray-600">Cozy Lifestyle</p>
+                <div class="gallery-item reveal reveal-delay-1" data-category="lifestyle">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1194e97b0-a2a1-4056-ab23-aafd74660b05.png" alt="Cafe Moments" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Cafe Moments</h4>
+                        <span>Cozy Lifestyle</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="nature">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Peaceful Waters" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Peaceful Waters</h3>
-                        <p class="text-gray-600">Landscape Art</p>
+                <div class="gallery-item reveal reveal-delay-2" data-category="nature">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1b3cb6884-a286-4e0d-9ed2-4aaa9454962c.png" alt="Peaceful Waters" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Peaceful Waters</h4>
+                        <span>Landscape Art</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="abstract">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Modern Shapes" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Modern Shapes</h3>
-                        <p class="text-gray-600">Contemporary Design</p>
+                <div class="gallery-item reveal reveal-delay-3" data-category="abstract">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/1fc2fda7b-4575-4f11-89ff-82ec1f4c4efa.png" alt="Modern Shapes" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Modern Shapes</h4>
+                        <span>Contemporary Design</span>
                     </div>
                 </div>
 
-                <div class="gallery-item bg-white rounded-2xl overflow-hidden shadow-lg" data-category="floral">
-                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Lavender Fields" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Lavender Fields</h3>
-                        <p class="text-gray-600">Floral Photography</p>
+                <div class="gallery-item reveal reveal-delay-4" data-category="floral">
+                    <img src="https://image.qwenlm.ai/public_source/61592993-595b-4726-b353-484f98a02fba/170c28907-4613-4485-83c6-e176af409a8c.png" alt="Lavender Fields" loading="lazy">
+                    <div class="gallery-overlay">
+                        <h4>Lavender Fields</h4>
+                        <span>Floral Photography</span>
                     </div>
                 </div>
             </div>
@@ -291,115 +1788,277 @@
     </section>
 
     <!-- Services Section -->
-    <section id="services" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">What I Offer</h2>
-                <p class="text-xl text-gray-600">Services to bring beauty into your life</p>
+    <section class="section services-section" id="services">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <div class="section-tag">What I Offer</div>
+                <h2 class="section-title">Services to Bring<br><span class="gradient-text">Beauty</span> Into Your Life</h2>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-pink-50 to-purple-50 hover:shadow-xl transition">
-                    <div class="text-5xl mb-4">🎨</div>
-                    <h3 class="text-2xl font-semibold mb-4">Art Prints</h3>
-                    <p class="text-gray-600">High-quality art prints curated from talented artists around the world. Perfect for home and office decor.</p>
+            <div class="services-grid">
+                <div class="service-card reveal reveal-delay-1">
+                    <div class="service-icon">🎨</div>
+                    <h3>Art Prints</h3>
+                    <p>High-quality art prints curated from talented artists around the world. Perfect for home and office decor.</p>
+                    <a href="#contact" class="service-link">Learn More <span>→</span></a>
                 </div>
 
-                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-purple-50 to-blue-50 hover:shadow-xl transition">
-                    <div class="text-5xl mb-4">📷</div>
-                    <h3 class="text-2xl font-semibold mb-4">Photography</h3>
-                    <p class="text-gray-600">Beautiful photography prints capturing moments, landscapes, and artistic compositions that inspire.</p>
+                <div class="service-card reveal reveal-delay-2">
+                    <div class="service-icon">📷</div>
+                    <h3>Photography</h3>
+                    <p>Beautiful photography prints capturing moments, landscapes, and artistic compositions that inspire.</p>
+                    <a href="#contact" class="service-link">Learn More <span>→</span></a>
                 </div>
 
-                <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-blue-50 to-pink-50 hover:shadow-xl transition">
-                    <div class="text-5xl mb-4">✨</div>
-                    <h3 class="text-2xl font-semibold mb-4">Custom Design</h3>
-                    <p class="text-gray-600">Personalized design services to create unique prints that match your style and vision perfectly.</p>
+                <div class="service-card reveal reveal-delay-3">
+                    <div class="service-icon">✨</div>
+                    <h3>Custom Design</h3>
+                    <p>Personalized design services to create unique prints that match your style and vision perfectly.</p>
+                    <a href="#contact" class="service-link">Learn More <span>→</span></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-                <p class="text-xl text-gray-600">Have a question or want to collaborate? I'd love to hear from you!</p>
+    <section class="section contact-section" id="contact">
+        <div class="section-container">
+            <div class="section-header reveal">
+                <div class="section-tag">Get In Touch</div>
+                <h2 class="section-title">Let's Create<br>Something <span class="gradient-text">Beautiful</span></h2>
             </div>
 
-            <form class="bg-white rounded-2xl shadow-xl p-8 md:p-12" onsubmit="event.preventDefault(); alert('Thank you for your message! I will get back to you soon.');">
-                <div class="grid md:grid-cols-2 gap-6 mb-6">
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Your Name</label>
-                        <input type="text" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition" placeholder="Ambia Khatun">
+            <div class="contact-grid">
+                <div class="contact-info reveal">
+                    <h3>Have a question or want to <span class="gradient-text">collaborate</span>?</h3>
+                    <p>I'd love to hear from you! Whether you're looking for custom prints, photography services, or just want to say hello — don't hesitate to reach out.</p>
+
+                    <div class="contact-details">
+                        <div class="contact-detail-item">
+                            <div class="contact-detail-icon">📧</div>
+                            <div class="contact-detail-text">
+                                <strong>Email</strong>
+                                ambia@freshprints.gallery
+                            </div>
+                        </div>
+                        <div class="contact-detail-item">
+                            <div class="contact-detail-icon">📍</div>
+                            <div class="contact-detail-text">
+                                <strong>Location</strong>
+                                Available Worldwide
+                            </div>
+                        </div>
+                        <div class="contact-detail-item">
+                            <div class="contact-detail-icon">⏰</div>
+                            <div class="contact-detail-text">
+                                <strong>Response Time</strong>
+                                Within 24 hours
+                            </div>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-gray-700 font-medium mb-2">Email Address</label>
-                        <input type="email" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition" placeholder="ambia@example.com">
+
+                    <div class="footer-social">
+                        <a href="#" title="Instagram">📸</a>
+                        <a href="#" title="Pinterest">📌</a>
+                        <a href="#" title="Behance">🎨</a>
+                        <a href="#" title="Dribbble">🏀</a>
                     </div>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Subject</label>
-                    <input type="text" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition" placeholder="How can I help you?">
+
+                <div class="contact-form-wrapper reveal reveal-delay-2">
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Your Name</label>
+                                <input type="text" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject</label>
+                            <input type="text" placeholder="How can I help you?">
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea placeholder="Tell me about your project..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            Send Message
+                            <span class="btn-arrow">→</span>
+                        </button>
+                    </form>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 font-medium mb-2">Message</label>
-                    <textarea rows="5" required class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition resize-none" placeholder="Your message..."></textarea>
-                </div>
-                <button type="submit" class="w-full bg-pink-600 text-white py-4 rounded-lg font-semibold hover:bg-pink-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">Send Message</button>
-            </form>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-3 gap-8 mb-8">
-                <div>
-                    <h3 class="text-2xl font-bold mb-4">MST. AMBIA KHATUN</h3>
-                    <p class="text-gray-400">Fresh Prints Gallery | Curated with love</p>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#home" class="text-gray-400 hover:text-pink-400 transition">Home</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-pink-400 transition">About</a></li>
-                        <li><a href="#gallery" class="text-gray-400 hover:text-pink-400 transition">Gallery</a></li>
-                        <li><a href="#services" class="text-gray-400 hover:text-pink-400 transition">Services</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-lg font-semibold mb-4">Follow Me</h4>
-                    <div class="flex space-x-4">
-                        <a href="https://www.pinterest.com/freshprints0825/" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-pinterest"></i></a>
-                        <a href="#" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/ambia47" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="text-2xl text-gray-400 hover:text-pink-400 transition"><i class="fab fa-twitter"></i></a>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <h3>MST. AMBIA KHATUN</h3>
+                    <p>Fresh Prints Gallery — Curating beautiful moments through art, photography, and design. Curated with love.</p>
+                    <div class="footer-social">
+                        <a href="#">📸</a>
+                        <a href="#">📌</a>
+                        <a href="#">🎨</a>
+                        <a href="#">🏀</a>
                     </div>
                 </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#gallery">Gallery</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Services</h4>
+                    <ul>
+                        <li><a href="#services">Art Prints</a></li>
+                        <li><a href="#services">Photography</a></li>
+                        <li><a href="#services">Custom Design</a></li>
+                        <li><a href="#contact">Collaborations</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="border-t border-gray-800 pt-8 text-center">
-                <p class="text-gray-400">&copy; 2026 MST. AMBIA KHATUN. All rights reserved. | Designed with ❤️</p>
+            <div class="footer-bottom">
+                <p>© 2026 MST. AMBIA KHATUN. All rights reserved.</p>
+                <p>Designed with <span>❤️</span></p>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button id="backToTop" class="fixed bottom-8 right-8 bg-pink-600 text-white w-12 h-12 rounded-full shadow-lg hover:bg-pink-700 transition opacity-0 pointer-events-none transform translate-y-10 z-50">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
     <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        // ===== LOADER =====
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 2000);
         });
 
-        // Gallery Filter
+        // ===== CUSTOM CURSOR =====
+        const dot = document.getElementById('cursorDot');
+        const ring = document.getElementById('cursorRing');
+
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                dot.style.left = e.clientX - 4 + 'px';
+                dot.style.top = e.clientY - 4 + 'px';
+                ring.style.left = e.clientX - 20 + 'px';
+                ring.style.top = e.clientY - 20 + 'px';
+            });
+
+            document.querySelectorAll('a, button, .gallery-item, .filter-btn').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    ring.style.transform = 'scale(1.5)';
+                    ring.style.borderColor = 'var(--accent-1)';
+                });
+                el.addEventListener('mouseleave', () => {
+                    ring.style.transform = 'scale(1)';
+                    ring.style.borderColor = 'var(--accent-2)';
+                });
+            });
+        }
+
+        // ===== NAVBAR SCROLL =====
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            if (window.scrollY > 500) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // ===== MOBILE MENU =====
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navLinks.classList.toggle('open');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // ===== ACTIVE NAV LINK =====
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                if (window.scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ===== SCROLL REVEAL =====
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // ===== ANIMATED COUNTERS =====
+        const counters = document.querySelectorAll('[data-count]');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = parseInt(entry.target.getAttribute('data-count'));
+                    let current = 0;
+                    const increment = target / 60;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+                        entry.target.textContent = Math.floor(current) + '+';
+                    }, 25);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // ===== GALLERY FILTER =====
         const filterBtns = document.querySelectorAll('.filter-btn');
         const galleryItems = document.querySelectorAll('.gallery-item');
 
@@ -415,55 +2074,41 @@
                         item.style.display = 'block';
                         setTimeout(() => {
                             item.style.opacity = '1';
-                            item.style.transform = 'scale(1)';
-                        }, 10);
+                            item.style.transform = 'translateY(0)';
+                        }, 50);
                     } else {
                         item.style.opacity = '0';
-                        item.style.transform = 'scale(0.8)';
+                        item.style.transform = 'translateY(20px)';
                         setTimeout(() => {
                             item.style.display = 'none';
-                        }, 300);
+                        }, 400);
                     }
                 });
             });
         });
 
-        // Smooth Scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                mobileMenu.classList.add('hidden');
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+        // ===== FORM SUBMIT =====
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('.btn-submit');
+            btn.innerHTML = '✓ Message Sent!';
+            btn.style.background = 'linear-gradient(135deg, #34d399, #60a5fa)';
+            setTimeout(() => {
+                btn.innerHTML = 'Send Message <span class="btn-arrow">→</span>';
+                btn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        });
+
+        // ===== SMOOTH PARALLAX ON HERO GRADIENTS =====
+        if (window.innerWidth > 768) {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.scrollY;
+                document.querySelectorAll('.hero-bg-gradient').forEach((g, i) => {
+                    g.style.transform = `translateY(${scrolled * (0.1 + i * 0.05)}px)`;
+                });
             });
-        });
-
-        // Back to Top Button
-        const backToTopBtn = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-10');
-            } else {
-                backToTopBtn.classList.add('opacity-0', 'pointer-events-none', 'translate-y-10');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        // Navbar Scroll Effect
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.classList.add('shadow-md');
-            } else {
-                navbar.classList.remove('shadow-md');
-            }
-        });
+        }
     </script>
 </body>
 </html>
